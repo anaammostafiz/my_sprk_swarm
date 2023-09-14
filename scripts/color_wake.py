@@ -4,10 +4,10 @@ import rospy
 import sys
 from std_msgs.msg import ColorRGBA
 
-def talker(n,c):
+def waker(n,c):
     topic = '/sphero_' + str(n) + '/set_color'
     pub = rospy.Publisher(topic, ColorRGBA, queue_size=10)
-    node_name = 'talker_' + str(n)
+    node_name = 'waker_' + str(n)
     rospy.init_node(node_name,anonymous=True)
     rate = rospy.Rate(0.1) # hz
     if c == 'red':
@@ -27,6 +27,6 @@ if __name__ == '__main__':
     sphero_num = sys.argv[1]
     color = sys.argv[2]
     try: 
-        talker(sphero_num,color)
+        waker(sphero_num,color)
     except rospy.ROSInterruptException:
         pass

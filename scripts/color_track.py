@@ -35,20 +35,20 @@ def callback(image_data,imu_data):
         hsv = cv2.cvtColor(crop_image, cv2.COLOR_BGR2HSV)
         
         if color == 'red':
-            lower_color = np.array([152,196,228])
-            upper_color = np.array([255, 255, 255])
+            lower_color = np.array([0,193,214])
+            upper_color = np.array([55,255,255])
         elif color == 'green':
-            lower_color = np.array([0,255,85])
-            upper_color = np.array([81, 255, 255])
+            lower_color = np.array([71,177,144])
+            upper_color = np.array([92,255,214])
         elif color == 'blue':
-            lower_color = np.array([0,255,255])
-            upper_color = np.array([255, 255, 255])
+            lower_color = np.array([106,205,255])
+            upper_color = np.array([153,255,255])
         elif color == 'test':
             lower_color = np.array([0,91,135])
-            upper_color = np.array([62, 255, 255])
+            upper_color = np.array([62,255,255])
         else:
-            lower_color = np.array([0,255,85])
-            upper_color = np.array([81, 255, 255])
+            lower_color = np.array([71,177,144])
+            upper_color = np.array([92,255,214])
         
 
         # Threshold the HSV image to get only yellow colors
@@ -75,7 +75,7 @@ def callback(image_data,imu_data):
         # cv2.circle(img, center, radius, color[, thickness[, lineType[, shift]]]) 
         cv2.circle(res,(int(cx), int(cy)), 10,(255,0,0),-1)
 
-        cv2.imshow("Original", cv_image)
+        #cv2.imshow("Original", cv_image)
         #cv2.imshow("HSV", hsv)
         #cv2.imshow("MASK", mask)
         cv2.imshow("RES", res)
