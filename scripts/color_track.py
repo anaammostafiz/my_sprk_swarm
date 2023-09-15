@@ -78,7 +78,7 @@ def callback(image_data,imu_data):
         #cv2.imshow("Original", cv_image)
         #cv2.imshow("HSV", hsv)
         #cv2.imshow("MASK", mask)
-        cv2.imshow("RES", res)
+        #cv2.imshow("RES", res)
         #cv2.imshow("Cropped", crop_image)
         
         cv2.waitKey(1)
