@@ -12,12 +12,7 @@ from sensor_msgs.msg import Image
 
 predator = sys.argv[1]
 prey = sys.argv[2]
-sign = sys.argv[3]
-s = 1
-if sign == 'pos':
-    s = 1
-elif sign == 'neg':
-    s = -1
+
 node_name = 'hunting_' + str(prey)
 rospy.init_node(node_name,anonymous=True)
 rate = rospy.Rate(0.5)
@@ -27,8 +22,8 @@ def callback(prey_data,predator_data,image_data):
     dist = sqrt( (prey_data.x - predator_data.x)**2 + (prey_data.y - predator_data.y)**2 )
     print(dist)
     if dist >= 20:
-        x_vel = s * 0.1 * (prey_data.x - predator_data.x)
-        y_vel = s * 0.025 * (prey_data.y - predator_data.y)
+        x_vel = 0.1 * (prey_data.x - predator_data.x)
+        y_vel = 0.05 * (prey_data.y - predator_data.y)
     else: 
         x_vel = 0
         y_vel = 0

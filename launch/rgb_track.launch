@@ -1,0 +1,58 @@
+<launch>
+    <arg name = "g_num" default = "0"/>
+    <node 
+        name = "waker_$(arg g_num)" 
+        pkg = "my_sprk_swarm" 
+        type = "color_wake.py" 
+        args = "$(arg g_num) green" 
+        output = "screen"
+    >
+    </node>
+
+    <arg name = "r_num" default = "1"/>
+    <node 
+        name = "waker_$(arg r_num)" 
+        pkg = "my_sprk_swarm" 
+        type = "color_wake.py" 
+        args = "$(arg r_num) red" 
+        output = "screen"
+    >
+    </node>
+
+    <arg name = "b_num" default = "2"/>
+    <node 
+        name = "waker_$(arg b_num)" 
+        pkg = "my_sprk_swarm" 
+        type = "color_wake.py" 
+        args = "$(arg b_num) blue" 
+        output = "screen"
+    >
+    </node>
+
+    <node 
+        name = "tracker_$(arg g_num)" 
+        pkg = "my_sprk_swarm" 
+        type = "color_track.py" 
+        args = "$(arg g_num) green" 
+        output = "screen"
+    >
+    </node>
+
+    <node 
+        name = "tracker_$(arg r_num)" 
+        pkg = "my_sprk_swarm" 
+        type = "color_track.py" 
+        args = "$(arg r_num) red" 
+        output = "screen"
+    >
+    </node>
+
+    <node 
+        name = "tracker_$(arg b_num)" 
+        pkg = "my_sprk_swarm" 
+        type = "color_track.py" 
+        args = "$(arg b_num) blue" 
+        output = "screen"
+    >
+    </node>
+</launch>

@@ -8,8 +8,9 @@ import sys
 from geometry_msgs.msg import Pose2D
 import message_filters
 
-sphero_num = sys.argv[1]
-color = sys.argv[2]
+args = rospy.myargv(sys.argv)
+sphero_num = args[1]
+color = args[2]
 
 def callback(image_data,imu_data):
 
@@ -64,9 +65,8 @@ def callback(image_data,imu_data):
         rx = 0.112*cx + 1.79
         ry = -0.113*cy + 69.9
         theta = imu_data.orientation.z
-        msg = [rx,ry,theta]
-        rospy.loginfo(msg)
-        pub.publish(msg[0],msg[1],msg[2])
+        rospy.loginfo('sphero ' + str(sphero_num) + ' track: ' + '(' + str(rx) + ',' + str(ry) + ',' + str(theta) + ')')
+        pub.publish(rx,ry,theta)
 
         # Bitwise-AND mask and original image
         res = cv2.bitwise_and(crop_image,crop_image, mask= mask)
@@ -89,8 +89,8 @@ image_sub = message_filters.Subscriber("/image_raw",Image)
 imu_topic = '/sphero_' + str(sphero_num) + '/imu'
 imu_sub = message_filters.Subscriber(imu_topic,Imu) 
 
-node_name = 'sprk_centroid_node_' + str(sphero_num)
-rospy.init_node(node_name, anonymous=True)
+node_name = 'tracker_' + str(sphero_num)
+rospy.init_node(node_name, anonymous=False)
 
 ts = message_filters.ApproximateTimeSynchronizer([image_sub,imu_sub],1,1)
 ts.registerCallback(callback)
