@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
 import sys
@@ -18,16 +18,17 @@ def waker(n,c):
         msg = [0, 0, 1, 0]
     else:
         msg = [0, 1, 0, 0]
-    while not rospy.is_shutdown():
-        rospy.loginfo('sphero ' + str(n) + ' set to ' + c)
-        pub.publish(msg[0],msg[1],msg[2],msg[3])
-        rate.sleep()
+    rospy.loginfo('sphero ' + str(n) + ' set to ' + c)
+    pub.publish(msg[0],msg[1],msg[2],msg[3])
+    rate.sleep()
 
 if __name__ == '__main__':
     args = rospy.myargv(sys.argv)
     sphero_num = args[1]
     color = args[2]
-    try: 
-        waker(sphero_num,color)
-    except rospy.ROSInterruptException:
-        pass
+    
+    while not rospy.is_shutdown():
+        try: 
+            waker(sphero_num,color)
+        except rospy.ROSInterruptException:
+            pass
