@@ -7,34 +7,28 @@ import random
 from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
 from std_msgs.msg import ColorRGBA
+import numpy as np
 
-class LightSynchronization:
-    def __init__(self, sphero_num, color):
+
+class LightSync:
+    def __init__(self, sphero_num):
         rospy.init_node('firefly_{}'.format(sphero_num), anonymous=True)
-        #self.robot_number = sphero_num
         self.image_sub = rospy.Subscriber('/image_raw', Image, self.image_callback)
-        self.light_pub = rospy.Publisher('/sphero_{}/set_color'.format(sphero_num), ColorRGBA, queue_size=10)
+        self.light_pub = rospy.Publisher('/sphero_{}/set_color'.format(sphero_num), ColorRGBA, queue_size=1)
         self.bridge = CvBridge()
         
-        # Initialize period
-        self.initial_period = random.randrange(2,5,1)
-        self.current_period = self.initial_period
-        self.last_synchronization_time = rospy.Time.now()
+        self.natural_frequency = 0.5
+        self.phase_shift = 0
+        self.phase = 0
+        self.last_time = 0
+        self.K = 1
 
     def image_callback(self, data):
-        try:
-            cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
-        except Exception as e:
-            rospy.logerr("Error converting Image message: {}".format(str(e)))
-            return
-
-        if self.detect_synchronization_signal(cv_image):
-            # Decrease period slightly upon synchronization
-            self.current_period -= 0.01
-
-        # Flash the LED with the current period
-        if rospy.Time.now() - self.last_synchronization_time > rospy.Duration(self.current_period):
-            # Set the desired LED color (e.g., red)
+        
+        flash_val = np.sin(2*self.natural_frequency*np.pi*rospy.get_time() + self.phase_shift)
+        if flash_val < 0.9:
+            self.light_pub.publish(0,0,0,0)
+        else:
             if color == 'red':
                 self.light_pub.publish(r = 1)
             elif color == 'green':
@@ -43,17 +37,42 @@ class LightSynchronization:
                 self.light_pub.publish(b = 1)
             else:
                 self.light_pub.publish(g = 1)
+            rospy.loginfo('sphero_' + str(sphero_num) + ' flashing')
+
+        try:
+            cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
+        except Exception as e:
+            rospy.logerr("Error converting Image message: {}".format(str(e)))
+            return
+
+        if flash_val < 0.9 and self.detect_bros_signal(cv_image):
+            delta_t = rospy.get_time() - self.last_time
+            self.phase = 2*self.natural_frequency*np.pi*(rospy.get_time()-np.floor(rospy.get_time()))
+            self.phase_shift += delta_t * (self.natural_frequency + self.K * np.sin(np.pi/2 - self.phase))
+            self.last_time = rospy.get_time()
+
+        
+
+    def detect_bros_signal(self, image):
+
+        # Convert from RGB to HSV
+        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
             
-            rospy.loginfo('sphero_' + str(sphero_num) + ' blinked')
-            self.last_synchronization_time = rospy.Time.now()
+        if bros_color == 'red':
+            lower_color = np.array([0,173,209])
+            upper_color = np.array([33,255,255])
+        elif bros_color == 'green':
+            lower_color = np.array([32,0,35])
+            upper_color = np.array([94,255,133])
+        elif bros_color == 'blue':
+            lower_color = np.array([72,72,0])
+            upper_color = np.array([255,93,255])
         else:
-            self.light_pub.publish(0,0,0,0)
-
-    def detect_synchronization_signal(self, image):
-
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        gray = cv2.GaussianBlur(gray, (41, 41), 0)
-        (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(gray)
+            lower_color = np.array([255,255,255])
+            upper_color = np.array([255,255,255])
+        
+        mask = cv2.inRange(hsv, lower_color, upper_color)
+        (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(mask)
         print(maxVal)
         if maxVal > 50:
             return True
@@ -65,7 +84,8 @@ if __name__ == '__main__':
         args = rospy.myargv(sys.argv)
         sphero_num = args[1]
         color = args[2]
-        light_sync = LightSynchronization(sphero_num,color)
+        bros_color = args[3]
+        light_sync = LightSync(sphero_num)
         rospy.spin()
     except rospy.ROSInterruptException:
         pass
