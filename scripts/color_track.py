@@ -37,14 +37,14 @@ def image_callback(data):
     hsv = cv2.cvtColor(crop_image, cv2.COLOR_BGR2HSV)
         
     if color == 'red':
-        lower_color = np.array([0,193,214])
-        upper_color = np.array([55,255,255])
+        lower_color = np.array([166,47,113])
+        upper_color = np.array([255,255,255])
     elif color == 'green':
-        lower_color = np.array([71,177,144])
-        upper_color = np.array([92,255,214])
+        lower_color = np.array([32,0,35])
+        upper_color = np.array([94,255,133])
     elif color == 'blue':
-        lower_color = np.array([106,205,255])
-        upper_color = np.array([153,255,255])
+        lower_color = np.array([0,253,150])
+        upper_color = np.array([255,255,255])
     elif color == 'test':
         lower_color = np.array([0,91,135])
         upper_color = np.array([62,255,255])

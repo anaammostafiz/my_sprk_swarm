@@ -10,9 +10,9 @@ from math import atan2, sqrt
 predator = sys.argv[1]
 prey = sys.argv[2]
 
-node_name = 'hunting_' + str(prey)
+node_name = 'hunting_' + str(predator) + '_' + str(prey)
 rospy.init_node(node_name,anonymous=False)
-rate = rospy.Rate(0.5)
+rate = rospy.Rate(10)
 
 def callback(prey_data,predator_data):
     msg = Twist()

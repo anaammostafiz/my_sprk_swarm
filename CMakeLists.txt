@@ -10,6 +10,8 @@ project(my_sprk_swarm)
 find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
+  urdf
+  xacro
 )
 
 ## System dependencies are found with CMake's conventions

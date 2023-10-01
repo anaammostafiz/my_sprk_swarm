@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+
+<robot name="sprk">
+    <link name="link">
+        <inertial>
+            <mass value="0.4" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.00020736" ixy="0" ixz="0" iyy="0.00020736" iyz="0" izz="0.00020736" />
+        </inertial>
+
+        <collision>
+            <geometry>
+                <sphere radius = "0.036"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <geometry>
+                <sphere radius = "0.036"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <gazebo reference="link">
+        <material>Gazebo/Red</material>
+    </gazebo>
+
+    <gazebo>
+        <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+            <commandTopic>sphero_x/cmd_vel</commandTopic>
+            <cmdTimeout>-1</cmdTimeout>
+            <odometryTopic>sphero_x/odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+            <odometryRate>20.0</odometryRate>
+            <robotBaseFrame>link</robotBaseFrame>
+        </plugin>
+    </gazebo>
+
+</robot>
