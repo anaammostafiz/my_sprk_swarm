@@ -2,7 +2,7 @@
     <arg name = "g_num" default = "0"/>
     <node 
         name = "waker_$(arg g_num)" 
-        pkg = "my_sprk_swarm" 
+        pkg = "sphero_swarm" 
         type = "color_wake.py" 
         args = "$(arg g_num) green" 
         output = "screen"
@@ -12,7 +12,7 @@
     <arg name = "r_num" default = "1"/>
     <node 
         name = "waker_$(arg r_num)" 
-        pkg = "my_sprk_swarm" 
+        pkg = "sphero_swarm" 
         type = "color_wake.py" 
         args = "$(arg r_num) red" 
         output = "screen"
@@ -22,7 +22,7 @@
     <arg name = "b_num" default = "2"/>
     <node 
         name = "waker_$(arg b_num)" 
-        pkg = "my_sprk_swarm" 
+        pkg = "sphero_swarm" 
         type = "color_wake.py" 
         args = "$(arg b_num) blue" 
         output = "screen"
@@ -31,7 +31,7 @@
 
     <node 
         name = "tracker_$(arg g_num)" 
-        pkg = "my_sprk_swarm" 
+        pkg = "sphero_swarm" 
         type = "color_track.py" 
         args = "$(arg g_num) green" 
         output = "screen"
@@ -40,7 +40,7 @@
 
     <node 
         name = "tracker_$(arg r_num)" 
-        pkg = "my_sprk_swarm" 
+        pkg = "sphero_swarm" 
         type = "color_track.py" 
         args = "$(arg r_num) red" 
         output = "screen"
@@ -49,15 +49,20 @@
 
     <node 
         name = "tracker_$(arg b_num)" 
-        pkg = "my_sprk_swarm" 
+        pkg = "sphero_swarm" 
         type = "color_track.py" 
         args = "$(arg b_num) blue" 
         output = "screen"
     >
     </node>
-    <node name="pos_plot"
+
+    <node 
+        name="pos_plot"
         pkg="rqt_plot"
         type="rqt_plot"
         args="/sphero_$(arg g_num)/position/vector/x /sphero_$(arg r_num)/position/vector/x /sphero_$(arg b_num)/position/vector/x
-              /sphero_$(arg g_num)/position/vector/y /sphero_$(arg r_num)/position/vector/y /sphero_$(arg b_num)/position/vector/y" />
+              /sphero_$(arg g_num)/position/vector/y /sphero_$(arg r_num)/position/vector/y /sphero_$(arg b_num)/position/vector/y"
+    >
+    </node>
+
 </launch>

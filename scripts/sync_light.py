@@ -12,7 +12,7 @@ import numpy as np
 
 class LightSync:
     def __init__(self, sphero_num):
-        rospy.init_node('firefly_{}'.format(sphero_num), anonymous=True)
+        rospy.init_node('{}_'.format(color) + '{}_'.format(sphero_num) + 'sync_{}'.format(sync_color), anonymous=False)
         self.image_sub = rospy.Subscriber('/image_raw', Image, self.image_callback)
         self.light_pub = rospy.Publisher('/sphero_{}/set_color'.format(sphero_num), ColorRGBA, queue_size=1)
         self.bridge = CvBridge()
@@ -45,7 +45,7 @@ class LightSync:
             rospy.logerr("Error converting Image message: {}".format(str(e)))
             return
 
-        if flash_val < 0.9 and self.detect_bros_signal(cv_image):
+        if flash_val < 0.9 and self.detect_sync_color(cv_image):
             delta_t = rospy.get_time() - self.last_time
             self.phase = 2*self.natural_frequency*np.pi*(rospy.get_time()-np.floor(rospy.get_time()))
             self.phase_shift += delta_t * (self.natural_frequency + self.K * np.sin(np.pi/2 - self.phase))
@@ -53,18 +53,18 @@ class LightSync:
 
         
 
-    def detect_bros_signal(self, image):
+    def detect_sync_color(self, image):
 
         # Convert from RGB to HSV
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
             
-        if bros_color == 'red':
+        if sync_color == 'red':
             lower_color = np.array([0,173,209])
             upper_color = np.array([33,255,255])
-        elif bros_color == 'green':
+        elif sync_color == 'green':
             lower_color = np.array([32,0,35])
             upper_color = np.array([94,255,133])
-        elif bros_color == 'blue':
+        elif sync_color == 'blue':
             lower_color = np.array([72,72,0])
             upper_color = np.array([255,93,255])
         else:
@@ -84,7 +84,7 @@ if __name__ == '__main__':
         args = rospy.myargv(sys.argv)
         sphero_num = args[1]
         color = args[2]
-        bros_color = args[3]
+        sync_color = args[3]
         light_sync = LightSync(sphero_num)
         rospy.spin()
     except rospy.ROSInterruptException:
