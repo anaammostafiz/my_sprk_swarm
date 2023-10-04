@@ -7,11 +7,17 @@ project(sphero_swarm)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
+
+find_package(gazebo REQUIRED) 
+
 find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   urdf
   xacro
+  gazebo_plugins
+  gazebo_ros
+  roscpp
 )
 
 ## System dependencies are found with CMake's conventions
@@ -120,6 +126,13 @@ include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
 )
+
+include_directories(${GAZEBO_INCLUDE_DIRS})
+link_directories(${GAZEBO_LIBRARY_DIRS})
+list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
+
+add_library(light_controller SHARED plugins/light_controller.cc)
+target_link_libraries(light_controller ${GAZEBO_LIBRARIES})
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}

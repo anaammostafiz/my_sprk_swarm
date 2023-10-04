@@ -1,0 +1,28 @@
+<launch>
+    <param name="robot_description" command="cat '$(find sphero_swarm)/urdf/sprk.urdf'" />
+    
+    <group ns="sphero_0">
+        <include file="$(find sphero_swarm)/launch/sprk_spawn.launch">
+            <arg name="x" value= "0.5"/>
+            <arg name="y" value= "0.5"/>
+            <arg name="model_name" value="sphero_0"/>
+        </include>
+    </group>
+
+    <group ns="sphero_1">
+        <include file="$(find sphero_swarm)/launch/sprk_spawn.launch">
+            <arg name="x" value= "0.25"/>
+            <arg name="y" value= "0.2"/>
+            <arg name="model_name" value="sphero_1"/>
+        </include>
+    </group>
+
+    <group ns="sphero_2">
+        <include file="$(find sphero_swarm)/launch/sprk_spawn.launch">
+            <arg name="x" value= "0.75"/>
+            <arg name="y" value= "0.2"/>
+            <arg name="model_name" value="sphero_2"/>
+        </include>
+    </group>
+          
+</launch>

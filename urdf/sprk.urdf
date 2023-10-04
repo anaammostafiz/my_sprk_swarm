@@ -5,7 +5,7 @@
         <inertial>
             <mass value="0.4" />
             <origin xyz="0 0 0" rpy="0 0 0" />
-            <inertia ixx="0.00020736" ixy="0" ixz="0" iyy="0.00020736" iyz="0" izz="0.00020736" />
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
         </inertial>
 
         <collision>
@@ -19,21 +19,40 @@
                 <sphere radius = "0.036"/>
             </geometry>
         </visual>
+
     </link>
 
-    <gazebo reference="link">
-        <material>Gazebo/Red</material>
+    <gazebo reference='link'>
+        <light name='led' type='spot'>      
+            <pose>0 0 0.072 0 0 0</pose>              
+            <diffuse>0 1 0 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+            <direction>0 0 -1</direction>
+            <attenuation>
+                <range>0.05</range>
+                <constant>0.2</constant>
+                <linear>0.8</linear>
+                <quadratic>0.01</quadratic>
+            </attenuation>
+            <cast_shadows>0</cast_shadows>
+            <spot>
+                <inner_angle>0.6</inner_angle>
+                <outer_angle>1</outer_angle>
+                <falloff>1</falloff>
+            </spot>
+        </light>    
     </gazebo>
 
     <gazebo>
         <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
-            <commandTopic>sphero_x/cmd_vel</commandTopic>
+            <commandTopic>cmd_vel</commandTopic>
             <cmdTimeout>-1</cmdTimeout>
-            <odometryTopic>sphero_x/odom</odometryTopic>
+            <odometryTopic>odom</odometryTopic>
             <odometryFrame>odom</odometryFrame>
             <odometryRate>20.0</odometryRate>
             <robotBaseFrame>link</robotBaseFrame>
         </plugin>
+        <plugin name="light_controller" filename="liblight_controller.so"></plugin>
     </gazebo>
 
 </robot>

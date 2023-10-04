@@ -1,9 +1,9 @@
 <launch>
 
-  <env name = "GAZEBO_MODEL_PATH" value = "$(find my_sprk_swarm)/models"/>
+  <env name = "GAZEBO_MODEL_PATH" value = "$(find sphero_swarm)/models"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find my_sprk_swarm)/worlds/map100x70cm.world"/>
+    <arg name="world_name" value="$(find sphero_swarm)/worlds/map100x70cm.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
