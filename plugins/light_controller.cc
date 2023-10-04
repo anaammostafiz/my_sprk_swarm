@@ -6,7 +6,7 @@
 
 
 #include <ros/ros.h>                // for acceessing ros function
-#include <std_msgs/String.h>        // to store ros sub msg
+#include <std_msgs/ColorRGBA.h>        // to store ros sub msg
 
 #include <functional>                     // to access boost::bind()
 #include <thread>                        // to use multithreading
@@ -58,7 +58,7 @@ namespace gazebo
 
             // subscribeoptions help to better manage multisubscriber (multithreading)
 
-            ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::String>(topicName, 
+            ros::SubscribeOptions so = ros::SubscribeOptions::create<std_msgs::ColorRGBA>(topicName, 
                                         1, boost::bind(&LightController::ColourCallback, this, _1), ros::VoidPtr(), &this->rosQueue);
             //                                                          this->Activate_Callback
 
@@ -118,48 +118,35 @@ namespace gazebo
 
     public:
         // fn to publish light color on ~/light/modify topic
-        void control_light(std::string colour)
+        void control_light(double red, double green, double blue)
         {
             msgs::Light light_msg;
 
             light_msg.set_name(this->complete_light_name);
 
-            if (colour == "red")  // if color is red
-            {
-                //                                                         Red,Green,Blue,Alpha
-                msgs::Set(light_msg.mutable_diffuse(), ignition::math::Color(1.0, 0, 0.0, 1.0));    
-            }
-
-            if (colour == "green")   // if color is green
-            {
-                //                                                          Red,Green,Blue,Alpha
-                msgs::Set(light_msg.mutable_diffuse(), ignition::math::Color(0.0, 1.0, 0.0, 1.0));
-            }
-
-            if (colour == "blue")   // if color is green
-            {
-                //                                                          Red,Green,Blue,Alpha
-                msgs::Set(light_msg.mutable_diffuse(), ignition::math::Color(0.0, 0.0, 1.0, 1.0));
-            }
+            // Set the light color based on the input values for red, green, and blue.
+            msgs::Set(light_msg.mutable_diffuse(), ignition::math::Color(red, green, blue, 1.0));
             // Send the message
             this->light_pub->Publish(light_msg);
         }
 
         //ros callback function
-        void ColourCallback(const std_msgs::String::ConstPtr &msg)
+        void ColourCallback(const std_msgs::ColorRGBA::ConstPtr &msg)
         {
 
-            ROS_INFO("Received [%s]", msg->data.c_str());
+            ROS_INFO("Received [%f, %f, %f, %f]", msg->r, msg->g, msg->b, msg->a);
 
-            // store msg data on a data member
-            this->light_colour_name = msg->data;
+            // Store the color components in member variables.
+            this->red_component = msg->r;
+            this->green_component = msg->g;
+            this->blue_component = msg->b;
         }
 
     public:
         void OnUpdate()
         {
             // color to publish on gazebo light
-            this->control_light(this->light_colour_name);
+            control_light(this->red_component, this->green_component, this->blue_component);
         }
 
     private:
@@ -181,7 +168,9 @@ namespace gazebo
         ros::CallbackQueue rosQueue;                      // rosqueue
         std::thread rosQueueThread;                       // rosqueue thread
         ros::Subscriber sub_light;     // ros sub
-        std::string light_colour_name; // light colour
+        double red_component;
+        double green_component;
+        double blue_component;
     };
     // Register this plugin with the simulator
     GZ_REGISTER_MODEL_PLUGIN(LightController)
