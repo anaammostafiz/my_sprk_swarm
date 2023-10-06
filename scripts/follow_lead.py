@@ -18,9 +18,17 @@ def callback(leader_data,follower_data):
     msg = Twist()
     dist = sqrt( (leader_data.vector.x - follower_data.vector.x)**2 + (leader_data.vector.y - follower_data.vector.y)**2 )
     print('dist: ' + str(dist))
+    ## real
+    # Kx = 0.1
+    # Ky = 0.05
+    ## gazebo
+    # Kx = 0.01
+    # Ky = 0.01
+    Kx = 0.01
+    Ky = 0.01
     if dist >= 20:
-        x_vel = 0.1 * (leader_data.vector.x - follower_data.vector.x)
-        y_vel = 0.05 * (leader_data.vector.y - follower_data.vector.y)
+        x_vel = Kx * (leader_data.vector.x - follower_data.vector.x)
+        y_vel = Ky * (leader_data.vector.y - follower_data.vector.y)
     else: 
         x_vel = 0
         y_vel = 0

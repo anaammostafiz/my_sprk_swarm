@@ -6,6 +6,8 @@ from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image, Imu
 import sys
 from geometry_msgs.msg import Vector3Stamped
+import yaml
+import os
 
 def tracker(num,color):
 
@@ -35,22 +37,19 @@ def image_callback(data):
         
     # Convert from RGB to HSV
     hsv = cv2.cvtColor(crop_image, cv2.COLOR_BGR2HSV)
-        
+
+    # Specify whether using 'real' or 'sim' camera
+    cam = 'sim' 
+
     if color == 'red':
-        lower_color = np.array([166,47,113])
-        upper_color = np.array([255,255,255])
+        lower_color = np.array(color_hsv[cam]['red']['lower_color'])
+        upper_color = np.array(color_hsv[cam]['red']['upper_color'])
     elif color == 'green':
-        lower_color = np.array([32,0,35])
-        upper_color = np.array([94,255,133])
+        lower_color = np.array(color_hsv[cam]['green']['lower_color'])
+        upper_color = np.array(color_hsv[cam]['green']['upper_color'])
     elif color == 'blue':
-        lower_color = np.array([0,253,150])
-        upper_color = np.array([255,255,255])
-    elif color == 'test':
-        lower_color = np.array([0,91,135])
-        upper_color = np.array([62,255,255])
-    else:
-        lower_color = np.array([71,177,144])
-        upper_color = np.array([92,255,214])
+        lower_color = np.array(color_hsv[cam]['blue']['lower_color'])
+        upper_color = np.array(color_hsv[cam]['blue']['upper_color'])
         
 
     # Threshold the HSV image to get only yellow colors
@@ -94,6 +93,15 @@ if __name__ == '__main__':
     args = rospy.myargv(sys.argv)
     sphero_num = args[1]
     color = args[2]
+
+    # Get the current directory of your script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Specify the relative or full path to your YAML file
+    yaml_file_path = os.path.join(script_dir, '..', 'config', 'color_hsv.yaml')
+
+    with open(yaml_file_path, 'r') as yaml_file:
+        color_hsv = yaml.load(yaml_file, Loader=yaml.FullLoader)
     pub_topic = '/sphero_' + str(sphero_num) + '/position'
     pub = rospy.Publisher(pub_topic, Vector3Stamped, queue_size=10)
     try:

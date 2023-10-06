@@ -1,0 +1,21 @@
+real:
+  red:
+    lower_color: [166,47,113]
+    upper_color: [255,255,255]
+  green:
+    lower_color: [32,0,35]
+    upper_color: [94,255,133]
+  blue:
+    lower_color: [0,253,150]
+    upper_color: [255,255,255]
+
+sim:
+  red:
+    lower_color: [0,75,0]
+    upper_color: [56,255,255]
+  green:
+    lower_color: [20,65,0]
+    upper_color: [61,255,255]
+  blue:
+    lower_color: [64,62,0]
+    upper_color: [255,255,255]
