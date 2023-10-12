@@ -1,0 +1,6 @@
+<launch>
+
+    <include file="$(find sphero_swarm)/launch/dark100x70cm.launch"></include>
+    <include file="$(find sphero_swarm)/launch/sprk_spawn3_close.launch"></include>
+
+</launch>

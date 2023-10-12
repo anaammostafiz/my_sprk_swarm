@@ -18,7 +18,7 @@ def publish_image():
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Specify the relative or full path to your image file
-    image_file = os.path.join(script_dir, '..', 'pics', 'rgb_mask.png')
+    image_file = os.path.join(script_dir, '..', 'pics', 'rgb.png')
     # Load the image
     image = cv2.imread(image_file)
 
@@ -28,6 +28,7 @@ def publish_image():
 
         # Publish the image message
         pub.publish(image_msg)
+        rospy.loginfo('Publishing image')
 
         # Sleep to maintain the desired publishing rate
         rate.sleep()
