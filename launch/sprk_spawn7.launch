@@ -1,0 +1,60 @@
+<launch>
+    <param name="robot_description" command="cat '$(find sphero_swarm)/urdf/sprk.urdf'" />
+    
+    <group ns="sphero_0">
+        <include file="$(find sphero_swarm)/launch/sprk_spawn.launch">
+            <arg name="x" value= "0.5"/>
+            <arg name="y" value= "0.4"/>
+            <arg name="model_name" value="sphero_0"/>
+        </include>
+    </group>
+
+    <group ns="sphero_1">
+        <include file="$(find sphero_swarm)/launch/sprk_spawn.launch">
+            <arg name="x" value= "0.4"/>
+            <arg name="y" value= "0.4"/>
+            <arg name="model_name" value="sphero_1"/>
+        </include>
+    </group>
+
+    <group ns="sphero_2">
+        <include file="$(find sphero_swarm)/launch/sprk_spawn.launch">
+            <arg name="x" value= "0.6"/>
+            <arg name="y" value= "0.4"/>
+            <arg name="model_name" value="sphero_2"/>
+        </include>
+    </group>
+
+    <group ns="sphero_3">
+        <include file="$(find sphero_swarm)/launch/sprk_spawn.launch">
+            <arg name="x" value= "0.35"/>
+            <arg name="y" value= "0.3"/>
+            <arg name="model_name" value="sphero_3"/>
+        </include>
+    </group>
+
+    <group ns="sphero_4">
+        <include file="$(find sphero_swarm)/launch/sprk_spawn.launch">
+            <arg name="x" value= "0.45"/>
+            <arg name="y" value= "0.3"/>
+            <arg name="model_name" value="sphero_4"/>
+        </include>
+    </group>
+
+    <group ns="sphero_5">
+        <include file="$(find sphero_swarm)/launch/sprk_spawn.launch">
+            <arg name="x" value= "0.55"/>
+            <arg name="y" value= "0.3"/>
+            <arg name="model_name" value="sphero_5"/>
+        </include>
+    </group>
+
+    <group ns="sphero_6">
+        <include file="$(find sphero_swarm)/launch/sprk_spawn.launch">
+            <arg name="x" value= "0.65"/>
+            <arg name="y" value= "0.3"/>
+            <arg name="model_name" value="sphero_6"/>
+        </include>
+    </group>
+          
+</launch>

@@ -18,7 +18,7 @@ def publish_image():
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Specify the relative or full path to your image file
-    image_file = os.path.join(script_dir, '..', 'pics', 'rgb.png')
+    image_file = os.path.join(script_dir, '..', 'pics', 'rgb_draw.png')
     # Load the image
     image = cv2.imread(image_file)
 

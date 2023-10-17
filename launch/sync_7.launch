@@ -1,0 +1,66 @@
+<launch>
+
+    <node 
+        name = "syncer_0" 
+        pkg = "sphero_swarm" 
+        type = "sync_color.py" 
+        args = "0" 
+        output = "screen"
+    >
+    </node>
+
+    <node 
+        name = "syncer_1" 
+        pkg = "sphero_swarm" 
+        type = "sync_color.py" 
+        args = "1" 
+        output = "screen"
+    >
+    </node>
+
+    <node 
+        name = "syncer_2" 
+        pkg = "sphero_swarm" 
+        type = "sync_color.py" 
+        args = "2" 
+        output = "screen"
+    >
+    </node>
+
+        <node 
+        name = "syncer_3" 
+        pkg = "sphero_swarm" 
+        type = "sync_color.py" 
+        args = "3" 
+        output = "screen"
+    >
+    </node>
+
+    <node 
+        name = "syncer_4" 
+        pkg = "sphero_swarm" 
+        type = "sync_color.py" 
+        args = "4" 
+        output = "screen"
+    >
+    </node>
+
+    <node 
+        name = "syncer_5" 
+        pkg = "sphero_swarm" 
+        type = "sync_color.py" 
+        args = "5" 
+        output = "screen"
+    >
+
+    </node>
+        <node 
+        name = "syncer_6" 
+        pkg = "sphero_swarm" 
+        type = "sync_color.py" 
+        args = "6" 
+        output = "screen"
+    >
+    </node>
+
+</launch>

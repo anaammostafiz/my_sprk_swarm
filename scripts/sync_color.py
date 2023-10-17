@@ -26,16 +26,16 @@ def target_callback(data):
     major_color = np.array([data.r_values[major_i],data.g_values[major_i],data.b_values[major_i]])
     if np.max(props) != 1 and color is not None and not np.array_equal(color, major_color):
         p = np.random.uniform(0,1)
-        if p <= props[1]:
+        if p <= props[0]:
             color = np.array([data.r_values[0],data.g_values[0],data.b_values[0]])
-        elif p<= props[1] + props[2]:
+        elif p<= props[0] + props[1]:
             color = np.array([data.r_values[1],data.g_values[1],data.b_values[1]])
         else:
             color = np.array([data.r_values[2],data.g_values[2],data.b_values[2]])
 
     for i in range(1,3):
         pub.publish(color[0],color[1],color[2],1)
-        rospy.loginfo('sphero ' + str(sphero_num) + ' initialized to ' + str(color))
+        rospy.loginfo('sphero ' + str(sphero_num) + ' set to ' + str(color))
         rospy.sleep(1)            
 
 if __name__ == '__main__':
