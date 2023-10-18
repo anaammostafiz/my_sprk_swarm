@@ -9,6 +9,7 @@ from sklearn.cluster import KMeans
 from std_msgs.msg import ColorRGBA
 from sphero_swarm.msg import TargetColorInfo  # Import your custom message
 import time
+import sys
 
 class ColorAnalysisNode:
     def __init__(self):
@@ -43,13 +44,13 @@ class ColorAnalysisNode:
             #print(rgb_image.shape)
             # Perform k-means clustering on the mask to find initial dominant colors
             flattened_pixels = rgb_image.reshape((h*w, c))
-            kmeans = KMeans(n_clusters=4,n_init=10)
+            kmeans = KMeans(n_clusters=k,n_init=10)
             kmeans.fit(flattened_pixels)
             self.dominant_colors = kmeans.cluster_centers_.round(0).astype(int)
 
             # Exclude black as a dominant color
             #self.dominant_colors = [color for color in self.dominant_colors if color[2] > 20]
-            exclude_row = np.array([20,20,20])
+            exclude_row = np.array([10,10,10])
             match = np.all(self.dominant_colors <= exclude_row,axis=1)
             self.dominant_colors = self.dominant_colors[~match]
 
@@ -106,4 +107,6 @@ def main():
     rospy.spin()
 
 if __name__ == '__main__':
+    args = rospy.myargv(sys.argv)
+    k = int(args[1])
     main()
