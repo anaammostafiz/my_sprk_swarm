@@ -50,7 +50,7 @@ class ColorAnalysisNode:
 
             # Exclude black as a dominant color
             #self.dominant_colors = [color for color in self.dominant_colors if color[2] > 20]
-            exclude_row = np.array([10,10,10])
+            exclude_row = np.array([50,50,50])
             match = np.all(self.dominant_colors <= exclude_row,axis=1)
             self.dominant_colors = self.dominant_colors[~match]
 
