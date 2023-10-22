@@ -73,7 +73,7 @@ def blob_detect(frame):
 
 class BlobTracker(object):
     def __init__(self):
-        self.num_robots = rospy.get_param('/num_of_robots', 3)
+        self.num_robots = rospy.get_param('/num_of_robots', 7)
         self.robot_name = rospy.get_param('/robot_name', 'sphero')
 
         # Create publishers for positions.
