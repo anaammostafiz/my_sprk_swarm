@@ -5,11 +5,11 @@ import numpy as np
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image, Imu
 import sys
-from geometry_msgs.msg import Vector3Stamped
+from geometry_msgs.msg import PointStamped
 import yaml
 import os
 
-def tracker(num,color):
+def tracker():
 
     node_name = 'tracker_' + str(sphero_num)
     rospy.init_node(node_name, anonymous=False)
@@ -65,9 +65,9 @@ def image_callback(data):
     rx = 0.112*cx + 1.79
     ry = -0.113*cy + 69.9
 
-    msg = Vector3Stamped()
-    msg.vector.x = rx
-    msg.vector.y = ry
+    msg = PointStamped()
+    msg.point.x = rx
+    msg.point.y = ry
     msg.header.stamp = rospy.Time.now()
     msg.header.frame_id = 'sphero_' + str(sphero_num)
 
@@ -103,9 +103,9 @@ if __name__ == '__main__':
     with open(yaml_file_path, 'r') as yaml_file:
         color_hsv = yaml.load(yaml_file, Loader=yaml.FullLoader)
     pub_topic = '/sphero_' + str(sphero_num) + '/position'
-    pub = rospy.Publisher(pub_topic, Vector3Stamped, queue_size=10)
+    pub = rospy.Publisher(pub_topic, PointStamped, queue_size=10)
     try:
-        tracker(sphero_num,color)
+        tracker()
     except rospy.ROSInterruptException:
         pass
 

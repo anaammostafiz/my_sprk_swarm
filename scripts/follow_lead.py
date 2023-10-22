@@ -2,7 +2,7 @@
 
 import rospy
 import sys
-from geometry_msgs.msg import Vector3Stamped
+from geometry_msgs.msg import PointStamped
 from geometry_msgs.msg import Twist
 import message_filters
 from math import atan2, sqrt 
@@ -16,7 +16,7 @@ rate = rospy.Rate(10)
 
 def callback(leader_data,follower_data):
     msg = Twist()
-    dist = sqrt( (leader_data.vector.x - follower_data.vector.x)**2 + (leader_data.vector.y - follower_data.vector.y)**2 )
+    dist = sqrt( (leader_data.point.x - follower_data.point.x)**2 + (leader_data.point.y - follower_data.point.y)**2 )
     print('dist: ' + str(dist))
     ## real
     # Kx = 0.1
@@ -27,8 +27,8 @@ def callback(leader_data,follower_data):
     Kx = 0.01
     Ky = 0.01
     if dist >= 20:
-        x_vel = Kx * (leader_data.vector.x - follower_data.vector.x)
-        y_vel = Ky * (leader_data.vector.y - follower_data.vector.y)
+        x_vel = Kx * (leader_data.point.x - follower_data.point.x)
+        y_vel = Ky * (leader_data.point.y - follower_data.point.y)
     else: 
         x_vel = 0
         y_vel = 0
@@ -46,9 +46,9 @@ def callback(leader_data,follower_data):
 cmd_topic = '/sphero_' + str(follower) + '/cmd_vel'
 pub = rospy.Publisher(cmd_topic,Twist,queue_size=10)
 leader_topic = '/sphero_' + str(leader) + '/position'
-leader_sub = message_filters.Subscriber(leader_topic, Vector3Stamped)
+leader_sub = message_filters.Subscriber(leader_topic, PointStamped)
 follower_topic = '/sphero_' + str(follower) + '/position'
-follower_sub = message_filters.Subscriber(follower_topic, Vector3Stamped)
+follower_sub = message_filters.Subscriber(follower_topic, PointStamped)
 
 ts = message_filters.ApproximateTimeSynchronizer([leader_sub,follower_sub],1,1)
 ts.registerCallback(callback)

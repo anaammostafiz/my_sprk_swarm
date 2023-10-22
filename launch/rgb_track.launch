@@ -60,8 +60,8 @@
         name="pos_plot"
         pkg="rqt_plot"
         type="rqt_plot"
-        args="/sphero_$(arg g_num)/position/vector/x /sphero_$(arg r_num)/position/vector/x /sphero_$(arg b_num)/position/vector/x
-              /sphero_$(arg g_num)/position/vector/y /sphero_$(arg r_num)/position/vector/y /sphero_$(arg b_num)/position/vector/y"
+        args="/sphero_$(arg g_num)/position/point/x /sphero_$(arg r_num)/position/point/x /sphero_$(arg b_num)/position/point/x
+              /sphero_$(arg g_num)/position/point/y /sphero_$(arg r_num)/position/point/y /sphero_$(arg b_num)/position/point/y"
     >
     </node>
 
