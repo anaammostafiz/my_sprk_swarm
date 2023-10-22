@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import rospy
 from ruamel.yaml import YAML
-from geometry_msgs.msg import Point
+from geometry_msgs.msg import PointStamped
 from std_msgs.msg import ColorRGBA
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
@@ -77,7 +77,7 @@ class BlobTracker(object):
         self.robot_name = rospy.get_param('/robot_name', 'sphero')
 
         # Create publishers for positions.
-        self.pos_pubs = [rospy.Publisher(f'/{self.robot_name}_{i}/position', Point, queue_size=1)
+        self.pos_pubs = [rospy.Publisher(f'/{self.robot_name}_{i}/position', PointStamped, queue_size=1)
                          for i in range(self.num_robots)]
 
         # Create publishers for sending color commands.
@@ -155,9 +155,12 @@ class BlobTracker(object):
             
             # Publish real world coordinates.
             if ok:
-                cnt_real_x = 0.112*cnt[0] + 1.79
-                cnt_real_y = -0.113*cnt[1] + 69.9
-                self.pos_pubs[id].publish(Point(cnt_real_x, cnt_real_y, 0))
+                msg = PointStamped()
+                msg.point.x = 0.112*cnt[0] + 1.79
+                msg.point.y = -0.113*cnt[1] + 69.9
+                msg.header.stamp = rospy.Time.now()
+                msg.header.frame_id = 'sphero_' + str(id)
+                self.pos_pubs[id].publish(msg)
 
         # Show the frames
         cv2.imshow('Camera', frame)
