@@ -70,6 +70,7 @@ Here's an example on how to run a leader-follower swarm of 3 Sphero's.
 |Tool: Depth Sensing (for object detection in dark)| <ul><li>- [ ] completed</li><li>- [ ] in progress</li><li>- [x] to do</li></ul>
 |Swarm: Leader-Follower| <ul><li>- [x] completed</li><li>- [ ] in progress</li><li>- [ ] to do</li></ul>
 |Swarm: Color-Synchronization| <ul><li>- [x] completed</li><li>- [ ] in progress</li><li>- [ ] to do</li></ul>
+|Swarm: Shape Formation with Robot Avoidance| <ul><li>- [x] completed</li><li>- [ ] in progress</li><li>- [ ] to do</li></ul>
 |Swarm: Object Behaviors (like collective transport)| <ul><li>- [ ] completed</li><li>- [ ] in progress</li><li>- [x] to do</li></ul>
 
 
