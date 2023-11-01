@@ -41,7 +41,7 @@ def image_callback(data):
     # Iterate over detected objects
     for contour in contours:
         # Filter objects based on size
-        if cv2.contourArea(contour) > 5000:
+        if cv2.contourArea(contour) > 1000:
             # Approximate the shape of the object by simplifying the contour
             epsilon = 0.02 * cv2.arcLength(contour, True)
             #epsilon = 10
