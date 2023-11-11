@@ -1,0 +1,66 @@
+<launch>
+
+    <node 
+        name = "tracker_0" 
+        pkg = "sphero_swarm" 
+        type = "odom_track.py" 
+        args = "0" 
+        output = "screen"
+    >
+    </node>
+
+    <node 
+        name = "tracker_1" 
+        pkg = "sphero_swarm" 
+        type = "odom_track.py" 
+        args = "1" 
+        output = "screen"
+    >
+    </node>
+
+    <node 
+        name = "tracker_2" 
+        pkg = "sphero_swarm" 
+        type = "odom_track.py" 
+        args = "2" 
+        output = "screen"
+    >
+    </node>
+
+    <node 
+        name = "tracker_3" 
+        pkg = "sphero_swarm" 
+        type = "odom_track.py" 
+        args = "3" 
+        output = "screen"
+    >
+    </node>
+
+    <node 
+        name = "tracker_4" 
+        pkg = "sphero_swarm" 
+        type = "odom_track.py" 
+        args = "4" 
+        output = "screen"
+    >
+    </node>
+
+    <node 
+        name = "tracker_5" 
+        pkg = "sphero_swarm" 
+        type = "odom_track.py" 
+        args = "5" 
+        output = "screen"
+    >
+    </node>
+
+    <node 
+        name = "tracker_6" 
+        pkg = "sphero_swarm" 
+        type = "odom_track.py" 
+        args = "6" 
+        output = "screen"
+    >
+    </node>
+
+</launch>

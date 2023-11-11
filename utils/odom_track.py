@@ -14,8 +14,8 @@ def tracker():
 
 def odom_callback(data):
     msg = PointStamped()
-    msg.point.x = data.pose.pose.position.x + float(x_offset)
-    msg.point.y = data.pose.pose.position.y + float(y_offset)
+    msg.point.x = data.pose.pose.position.x * 100 + float(x_offset)
+    msg.point.y = data.pose.pose.position.y * 100 + float(y_offset)
     msg.header.stamp = rospy.Time.now()
     msg.header.frame_id = 'sphero_' + str(sphero_num)
 
