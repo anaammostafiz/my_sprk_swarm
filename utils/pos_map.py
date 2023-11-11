@@ -19,7 +19,7 @@ N = rospy.get_param('/num_of_robots', 7)
 image_size = (1000, 700)
 
 # Circle radius
-circle_radius = 30
+circle_radius = 21
 
 # Create an image for plotting
 plot_image = Image.new('RGB', (image_size[0], image_size[1]), color='black')

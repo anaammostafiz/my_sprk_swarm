@@ -19,6 +19,8 @@ cmd_publishers = {}
 # Get the total number of robots (N) as a parameter or constant
 N = rospy.get_param('/num_of_robots',7)
 
+turning_angles = np.zeros(N)
+
 # Callback function to update robot positions
 def callback(*pos_datas):
     print('called back')
@@ -35,7 +37,8 @@ def move_robots(cmd_publishers):
     for sphero_id, loc in sphero_locs.items():
         avoid_locs = {loc_id: loc for loc_id, loc in sphero_locs.items() if loc_id != sphero_id}
         # Calculate the desired velocity based on potential fields
-        desired_velocity = calculate_desired_velocity(loc, avoid_locs)
+        turning_angles[sphero_id] += np.random.uniform(-math.pi/4, math.pi/4)
+        desired_velocity = calculate_desired_velocity(loc, turning_angles[sphero_id], avoid_locs)
 
         # Publish the desired velocity to control the robot
         cmd_vel = Twist()
@@ -43,15 +46,14 @@ def move_robots(cmd_publishers):
         cmd_vel.linear.y = desired_velocity[1]
         cmd_publishers[sphero_id].publish(cmd_vel)
 
-def calculate_desired_velocity(current_loc, avoid_locs):
+def calculate_desired_velocity(current_loc, angle, avoid_locs):
     # Implement a simple random walk for the desired velocity
     step_size = np.random.uniform(10,30)
-    turning_angle = np.random.uniform(-math.pi, math.pi)  # Allow small turns
     
     # Calculate the new position based on the random walk
-    new_x = current_loc[0] + step_size * math.cos(turning_angle)
-    new_y = current_loc[1] + step_size * math.sin(turning_angle)
-    goal_loc = [new_x,new_y]
+    goal_x = current_loc[0] + step_size * math.cos(angle)
+    goal_y = current_loc[1] + step_size * math.sin(angle)
+    goal_loc = [goal_x,goal_y]
 
     # Add repulsive potential to avoid other robots
     attractive_potential = calculate_attractive_potential(current_loc, goal_loc)
