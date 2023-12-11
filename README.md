@@ -54,28 +54,9 @@ Finally, we can move robot 0 around using the keyboard and watch how the others 
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=sphero_0/cmd_vel
 ```
 
-You should get something like the video below. Click on the below code cell and press shift+Enter to load the video.
+You should get something like the video below.
 
-
-```
-from I.display import HTML
-
-HTML("""
-    <video alt="swarm_follow" width="640" height="480" controls>
-        <source src="videos/swarm_follow.mp4" type="video/mp4">
-    </video>
-""")
-```
-
-
-
-
-
-<video alt="swarm_follow" width="640" height="480" controls>
-    <source src="videos/swarm_follow.mp4" type="video/mp4">
-</video>
-
-
+https://github.com/anaammostafiz/sphero_swarm/assets/74332136/30de48c4-4bf0-4c15-a71f-432c3edbeb02
 
 
 ## Random Color Synchronization
@@ -105,25 +86,7 @@ rosrun sphero_swarm color_cluster.py 7
 
 You should get something like the video below.
 
-
-```
-from I.display import HTML
-
-HTML("""
-    <video alt="swarm_sync4" width="640" height="480" controls>
-        <source src="videos/swarm_sync4.mp4" type="video/mp4">
-    </video>
-""")
-```
-
-
-
-
-
-<video alt="swarm_sync4" width="640" height="480" controls>
-    <source src="videos/swarm_sync4.mp4" type="video/mp4">
-</video>
-
+https://github.com/anaammostafiz/sphero_swarm/assets/74332136/ade145b4-937b-4748-834e-1b12862eaaba
 
 
 
@@ -152,28 +115,9 @@ Finally, we can tell the robots to form a circle. The robots do this by using an
 rosrun sphero_swarm form_circle.py
 ```
 
-You should get something like the video below. Click on the below code and press shift+Enter to load the video.
+You should get something like the video below.
 
-
-```
-from I.display import HTML
-
-HTML("""
-    <video alt="swarm_circle" width="640" height="480" controls>
-        <source src="videos/swarm_circle.mp4" type="video/mp4">
-    </video>
-""")
-```
-
-
-
-
-
-<video alt="swarm_circle" width="640" height="480" controls>
-    <source src="videos/swarm_circle.mp4" type="video/mp4">
-</video>
-
-
+https://github.com/anaammostafiz/sphero_swarm/assets/74332136/53ae54f2-87d9-42c1-ac69-3a316b16b28e
 
 
 ## Topological Mapping
@@ -208,28 +152,9 @@ Finally, we will keep track of the position history of each robot to form a map 
 rosrun sphero_swarm pos_map.py
 ```
 
-You should get something like the video below (shown sped up). Click on the below code and press shift+Enter to load the video.
+You should get something like the video below (shown sped up). 
 
-
-```
-from I.display import HTML
-
-HTML("""
-    <video alt="swarm_mapping" width="640" height="480" controls>
-        <source src="videos/swarm_mapping.mp4" type="video/mp4">
-    </video>
-""")
-```
-
-
-
-
-
-<video alt="swarm_mapping" width="640" height="480" controls>
-    <source src="videos/swarm_mapping.mp4" type="video/mp4">
-</video>
-
-
+https://github.com/anaammostafiz/sphero_swarm/assets/74332136/bc27edfb-f3c8-4573-b8bb-150cff211ff6
 
 
 ## Conclusion
